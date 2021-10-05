@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
     def index
         @categories = Category.all
-        render json: @categorys
+        render json: @categories
     end
 
     def show
