@@ -1,35 +1,29 @@
 class CategoriesController < ApplicationController
     def index
         @categories = Category.all
+        render json: @categorys
     end
 
     def show
         @category = Category.find(params[:id])
-    end
-
-    def new
-        @category = Category.new
+        render json: @category
     end
 
     def create
         @category = Category.new(category_params)
 
         if @category.save
-            @category
+            render json: @category
         else
             render json: @category.errors, status: :unprocessable_entity
         end
-    end
-
-    def edit
-        @category = Category.find(params[:id])
     end
 
     def update
         @category = Category.find(params[:id])
 
         if @category.update(category_params)
-            @category
+            render json: @category
         else
             render json: @category.errors, status: :unprocessable_entity
         end
@@ -38,7 +32,7 @@ class CategoriesController < ApplicationController
     def destroy
         @category = Category.find(params[:id])
         @category.destroy
-
+        render json: @category
     end
     
     private

@@ -1,14 +1,12 @@
 class GamesController < ApplicationController
     def index
         @games = Game.all
+        render json: @games
     end
 
     def show
         @game = Game.find(params[:id])
-    end
-
-    def new
-        @game = Game.new
+        render json: @game
     end
 
     def create
@@ -16,14 +14,10 @@ class GamesController < ApplicationController
         @game = @platform.games.create(game_params)
 
         if @game.save
-            @game
+            render json: @game
         else
             render json: @game.errors, status: :unprocessable_entity
         end
-    end
-
-    def edit
-        @game = Game.find(params[:id])
     end
 
     def update
@@ -31,7 +25,7 @@ class GamesController < ApplicationController
         @game = @platform.games.create(game_params)
 
         if @game.update(game_params)
-            @game
+            render json: @game
         else
             render json: @game.errors, status: :unprocessable_entity
         end
@@ -40,6 +34,7 @@ class GamesController < ApplicationController
     def destroy
         @game = Game.find(params[:id])
         @game.destroy
+        render json: @game
     end
     
     private

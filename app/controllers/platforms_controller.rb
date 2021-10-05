@@ -1,35 +1,29 @@
 class PlatformsController < ApplicationController
     def index
         @platforms = Platform.all
+        render json: @platforms
     end
 
     def show
         @platform = Platform.find(params[:id])
-    end
-
-    def new
-        @platform = Platform.new
+        render json: @platform
     end
 
     def create
         @platform = Platform.new(platform_params)
 
         if @platform.save
-            @platform
+            render json: @platform
         else
             render json: @platform.errors, status: :unprocessable_entity
         end
-    end
-
-    def edit
-        @platform = Platform.find(params[:id])
     end
 
     def update
         @platform = Platform.find(params[:id])
 
         if @platform.update(platform_params)
-            @platform
+            render json: @platform
         else
             render json: @platform.errors, status: :unprocessable_entity
         end
@@ -38,6 +32,7 @@ class PlatformsController < ApplicationController
     def destroy
         @platform = Platform.find(params[:id])
         @platform.destroy
+        render json: @platform
     end
     
     private

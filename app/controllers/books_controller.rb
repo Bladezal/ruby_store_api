@@ -1,14 +1,11 @@
 class BooksController < ApplicationController
     def index
         @books = Book.all
+        render json: @books
     end
 
     def show
         @book = Book.find(params[:id])
-    end
-
-    def new
-        @book = Book.new
     end
 
     def create
@@ -16,14 +13,10 @@ class BooksController < ApplicationController
         @book = @category.books.create(book_params)
 
         if @book.save
-            @book
+            render json: @book
         else
             render json: @book.errors, status: :unprocessable_entity
         end
-    end
-
-    def edit
-        @book = Book.find(params[:id])
     end
 
     def update
@@ -31,7 +24,7 @@ class BooksController < ApplicationController
         @book = @category.books.create(book_params)
 
         if @book.update(book_params)
-            @book
+            render json: @book
         else
             render json: @book.errors, status: :unprocessable_entity
         end
@@ -40,6 +33,7 @@ class BooksController < ApplicationController
     def destroy
         @book = Book.find(params[:id])
         @book.destroy
+        render json: @book
     end
     
     private
